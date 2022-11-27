@@ -16,13 +16,36 @@ model Example {
   updatedAt DateTime @updatedAt
 }
 
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  expiresAt DateTime
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// SQLite doesn't have enums
+// enum Role {
+//   ADMIN
+//   USER
+// }
+
 model User {
   id       String @id @default(cuid())
-  username String @unique
+  email    String @unique
+  username String
   password String
 
-  accessToken  String?
-  refreshToken String?
+  photo String? @default("default.png")
+
+  verified Boolean @default(false)
+
+  // accessToken  String?
+  // refreshToken String?
+
+  sessions Session[]
+
+  // SQLite doesn't have enums
+  // role Role? @default(USER)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

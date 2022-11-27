@@ -1,10 +1,13 @@
 # Authentication and Authorization Tests
 
+## TODO
+
+- [ ] better session management
+- [ ] add roles to user model after switching off of sqlite
+
 ## Access and Refresh tokens
 
 <https://codevoweb.com/trpc-api-with-nextjs-postgresql-access-refresh-tokens/>
-
-left off at "Step 5 – Create the Database Services"
 
 Generate public and private key pairs for signing JWTs
 
@@ -30,5 +33,3 @@ echo -n "REFRESH_TOKEN_PUBLIC_KEY=\""
 cat refresh-public-key.pem | tr -d '\n' | base64 | tr -d '\n'
 echo "\""
 ```
-
-## Role based authorization

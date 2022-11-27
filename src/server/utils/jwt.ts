@@ -1,15 +1,11 @@
-import jwt, { SignOptions } from "jsonwebtoken";
-import { env } from "../env/server.mjs";
+import jwt, { type SignOptions } from "jsonwebtoken";
+import { env } from "../../env/server.mjs";
 
-export const signJwt = ({
-  payload,
-  key,
-  options = {},
-}: {
-  payload: Record<string, unknown>;
-  key: "access" | "refresh";
-  options: SignOptions;
-}) => {
+export const signJwt = (
+  payload: Record<string, unknown>,
+  key: "access" | "refresh",
+  options: SignOptions = {}
+) => {
   const base64 =
     key === "access"
       ? env.ACCESS_TOKEN_PRIVATE_KEY
