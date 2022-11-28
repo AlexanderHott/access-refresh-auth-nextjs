@@ -42,7 +42,7 @@ export const updateUser = async (
 // TODO: check User type
 export const signTokens = async (user: User) => {
   // 1. Create Session
-  prisma.session.create({
+  await prisma.session.create({
     data: {
       expiresAt: new Date(Date.now() + SESSION_LIFETIME * 1000),
       userId: user.id,

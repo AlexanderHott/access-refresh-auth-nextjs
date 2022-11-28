@@ -27,6 +27,8 @@ export const deserializeUser = async ({
       access_token = req.cookies.access_token;
     }
 
+    console.log("access_token", access_token);
+
     const notAuthenticated = {
       req,
       res,
@@ -40,6 +42,8 @@ export const deserializeUser = async ({
     // Validate Access Token
     const decoded = verifyJwt<{ sub: string }>(access_token, "access");
 
+    console.log("decoded", decoded);
+
     if (!decoded) {
       return notAuthenticated;
     }
@@ -49,9 +53,11 @@ export const deserializeUser = async ({
       where: { userId: decoded.sub },
     });
 
+    console.log("sessions", sessions);
+
     let session: Session | undefined = undefined;
     for (const s of sessions) {
-      if (s.expiresAt < new Date()) {
+      if (s.expiresAt > new Date()) {
         session = s;
         break;
       }
@@ -62,6 +68,8 @@ export const deserializeUser = async ({
 
     // Check if user still exist
     const user = await prisma.user.findUnique({ where: { id: decoded.sub } });
+
+    console.log("user1", user);
 
     if (!user) {
       return notAuthenticated;
